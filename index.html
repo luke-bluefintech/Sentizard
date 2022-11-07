@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Goldman&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+        integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./helper_functions/auth.js"></script>
+    <script src="https://use.fontawesome.com/b8af91ce87.js"></script>
+    <script src="https://kit.fontawesome.com/d1d35104b4.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./styles/homeStyle.css">
+    <link rel="icon" href="https://sp3-data-vis.s3.amazonaws.com/bluefin_fish.png">
+    <title>Sentizard</title>
+</head>
+
+<body id="homepage" class="homepage" onload="setButton('User')">
+    <div class="enlargedFrame" id="enlargedFrame">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+            <ul class="nav navbar-nav abs-center-x">
+                <li class="nav-item">Sentizard</li>
+            </ul>
+
+        </nav>
+        <div class="row no-gutters">
+            <div class="col-1">
+                <nav id="sidebar">
+                    <ul class="list-unstyled components">
+                        <h4>
+                            <li>
+                                <a href="#" class=" active" id="User" onclick="setButton(id)">
+                                    &nbsp
+                                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                                    User
+                                </a>
+                                <a href="#" id="By Device" onclick="setButton(id)">
+                                    &nbsp
+                                    <i class="fas fa-chart-line"></i>
+                                    Comparisons
+                                </a>
+                                <a href="#" id="Compare" onclick="setButton(id)">
+                                    &nbsp
+                                    <i class="fa-solid fa-a"></i>
+                                    Sentence Analyzer
+                                </a>
+                            </li>
+                        </h4>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-11">
+                <div class="wrapper" id="borderwrap"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters">
+        <div class="col-1"></div>
+        <div class="col-11">
+            <div class="displaywindow" id="displaywindow"></div>
+        </div>
+    </div>
+    <ul>
+        <a id=0 href="#" target="_blank" style="display:none;">Alexa Usage</a>
+        <a id=1 href="#" target="_blank" style="display:none;">Active Devices</a>
+        <a id=2 href="#" target="_blank" style="display:none;">Methods per Day</a>
+        <a id=3 href="#" target="_blank" style="display:none;">DSN by Month</a>
+        <a id=4 href="#" target="_blank" style="display:none;">Interactions per Day</a>
+        <a id=5 href="#" target="_blank" style="display:none;">New Devices by Month</a>
+        <a id=6 href="#" target="_blank" style="display:none;">Total ACK Usage</a>
+        <a id=7 href="#" target="_blank" style="display:none;">Usage Methods</a>
+        <a id=8 href="#" target="_blank" style="display:none;">Methods per Month</a>
+        <a id=9 href="#" target="_blank" style="display:none;">Average Interactions by Month</a>
+        <a id=10 href="./Comparisons.html" target="_blank" style="display:none;">Comparison</a></li>
+    </ul>
+    <div class="getdocdiv" id="getdocdiv"></div>
+    </div>
+</body>
+
+<script>
+    // Each sidebar button
+    var sidebarButtons = ["User", "By Device", "Compare"];
+
+    // Links to each graph
+    var links = ["AlexaUsage.html",
+        "DailyActiveDevices.html",
+        "DayOfWeek.html",
+        "DSNbyMonth.html",
+        "InteractionDay.html",
+        "NewDSNMonth.html",
+        "TotalACKUsage.html",
+        "UsageMethods.html",
+        "MonthMethods.html",
+        "AvgInteractionsMonthly.html"];
+
+    // Sets buttons to correct state
+    function setButton(button) {
+        // Sets all buttons to off
+        for (let x = 0; x < sidebarButtons.length; x++) {
+            document.getElementById(sidebarButtons[x]).className = document.getElementById(sidebarButtons[x]).className.replace(" active", "");
+        }
+        // Sets correct button to on
+        var buttonToActivate = document.getElementById(button);
+        buttonToActivate.className += " active";
+        document.getElementById("displaywindow").innerHTML = "";
+        if (button === "Compare") {
+            var compareFrame = document.createElement('iframe');
+            document.getElementById('displaywindow').style.width = "91.666666%";
+            compareFrame.class = "comparisonwindow";
+            compareFrame.id = "sentenceAnalyzer.html";
+            compareFrame.src = "SentenceAnalyzer.html";
+            compareFrame.height = "100%";
+            compareFrame.width = "100%";
+            compareFrame.scrolling = "no";
+            compareFrame.style.marginLeft = '0rem';
+            compareFrame.style.marginTop = '0rem';
+            compareFrame.style.border = 'none';
+            document.getElementById('displaywindow').appendChild(compareFrame);
+            compareFrame.style.visibility = 'visible';
+            /* for (var i = 0; i < links.length; i++) {
+                document.getElementById(links[i]).style.visibility = 'visible';
+            } */
+        }
+        if (button === "By Device") {
+            document.getElementById('borderwrap').style.display = 'inline';
+            var bydeviceFrame = document.createElement('iframe');
+            document.getElementById('displaywindow').style.width = "91.666666%";
+            bydeviceFrame.class = "ComparisonsWindow";
+            bydeviceFrame.id = "Comparisons.html";
+            bydeviceFrame.src = "Comparisons.html";
+            bydeviceFrame.height = "100%";
+            bydeviceFrame.width = "100%";
+            bydeviceFrame.scrolling = "no";
+            bydeviceFrame.style.marginLeft = '0rem';
+            bydeviceFrame.style.marginTop = '0rem';
+            bydeviceFrame.style.border = 'none';
+            document.getElementById('displaywindow').appendChild(bydeviceFrame);
+            bydeviceFrame.style.visibility = 'visible';
+            /* for (var i = 0; i < links.length; i++) {
+                document.getElementById(links[i]).style.visibility = 'visible';
+            } */
+        }
+        if (button === "User") {
+            document.getElementById('borderwrap').style.display = 'inline';
+            var bydeviceFrame = document.createElement('iframe');
+            document.getElementById('displaywindow').style.width = "91.666666%";
+            bydeviceFrame.class = "UserWindow";
+            bydeviceFrame.id = "User.html";
+            bydeviceFrame.src = "User.html";
+            bydeviceFrame.height = "100%";
+            bydeviceFrame.width = "100%";
+            bydeviceFrame.scrolling = "no";
+            bydeviceFrame.style.marginLeft = '0rem';
+            bydeviceFrame.style.marginTop = '0rem';
+            bydeviceFrame.style.border = 'none';
+            document.getElementById('displaywindow').appendChild(bydeviceFrame);
+            bydeviceFrame.style.visibility = 'visible';
+        }
+    }
+
+</script>
