@@ -1,0 +1,43 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" type="text/css" href="../static/index.css">
+
+
+
+
+</head>
+
+<body>
+
+  <form class="grid" action="/result" method="POST">
+
+    {% if res %}
+    <center>
+      <h3 style="color: blue;" class="let_space">The predicted setiment result is: {{res}}</h3>
+    </center>
+
+    {% endif %}
+
+    <label for="res"> Enter tweet sentence: </label>
+    
+    <input type="text" id="sentence" name="sentence">
+    <center><input class="file_submit" type="Submit"></center>
+
+  </form>
+
+
+
+
+
+
+  <br>
+  <br>
+  <br>
+
+
+</body>
+
+</html>
