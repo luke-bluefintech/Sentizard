@@ -2,13 +2,13 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="./styles/user.css">
+  <link rel="stylesheet" href="./static/styles/user.css">
   <script type="text/javascript" src=https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json></script>
   <title>Twitter Data Pulling</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -30,13 +30,33 @@
   </div>
   <div class="row">
     <div class="col">
-      <button>Submit</button>
+      <form class="grid" action="/result" method="POST">
+
+        {% if res %}
+        <center>
+          <h3 style="color: blue;" class="let_space">The predicted setiment result is: {{res}}</h3>
+        </center>
+
+        {% endif %}
+
+        <label for="res"> Enter tweet sentence: </label>
+
+        <input type="text" id="sentence" name="sentence">
+        <center><input class="file_submit" type="Submit"></center>
+
+      </form>
     </div>
   </div>
 </form>
 
 <script>
+
   $(document).ready(function () {
+    $.get('../', null, function (text) {
+      console.log($(text).find('#python-response'));
+    });
+    var res = document.getElementById("python-response").data;
+    console.log("res: " + res);
     var results = $.getJSON("cities.json", function (data) {
       for (var i = 0; i < data.length; i++) {
         $("#cities").append('<option value="' + data[i].name + '">' + data[i].name + '</option');

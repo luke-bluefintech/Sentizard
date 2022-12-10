@@ -15,7 +15,7 @@
     <script src="./helper_functions/auth.js"></script>
     <script src="https://use.fontawesome.com/b8af91ce87.js"></script>
     <script src="https://kit.fontawesome.com/d1d35104b4.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./styles/homeStyle.css">
+    <link rel="stylesheet" type="text/css" href="./static/styles/homeStyle.css">
     <link rel="icon" href="https://iteration2code.s3.us-east-2.amazonaws.com/Wand_Icon.png">
     <title>Sentizard</title>
 </head>
@@ -24,9 +24,11 @@
     <div class="enlargedFrame" id="enlargedFrame">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
             <ul class="nav navbar-nav abs-left-x">
-                <i class="nav-item">Sentizard</i>
+                <i class="nav-item">
+                    <img class="wand-icon" src="https://iteration2code.s3.us-east-2.amazonaws.com/Wand_Icon.png" alt="Wand"></img>
+                    Sentizard
+                </i>
             </ul>
-
         </nav>
         <div class="row no-gutters">
             <div class="col-1">
@@ -83,6 +85,10 @@
 </body>
 
 <script>
+    $(document).ready(function () {
+        window.history.pushState('page2', 'Title', '/data');
+    });
+
     // Each sidebar button
     var sidebarButtons = ["User", "By Device", "Compare"];
 
@@ -113,7 +119,7 @@
             document.getElementById('displaywindow').style.width = "91.666666%";
             compareFrame.class = "comparisonwindow";
             compareFrame.id = "sentenceAnalyzer.html";
-            compareFrame.src = "SentenceAnalyzer.html";
+            compareFrame.src = "static/SentenceAnalyzer.html";
             compareFrame.height = "100%";
             compareFrame.width = "100%";
             compareFrame.scrolling = "no";
@@ -132,7 +138,7 @@
             document.getElementById('displaywindow').style.width = "91.666666%";
             bydeviceFrame.class = "ComparisonsWindow";
             bydeviceFrame.id = "Comparisons.html";
-            bydeviceFrame.src = "Comparisons.html";
+            bydeviceFrame.src = "static/Comparisons.html";
             bydeviceFrame.height = "100%";
             bydeviceFrame.width = "100%";
             bydeviceFrame.scrolling = "no";
@@ -151,7 +157,7 @@
             document.getElementById('displaywindow').style.width = "91.666666%";
             bydeviceFrame.class = "UserWindow";
             bydeviceFrame.id = "User.html";
-            bydeviceFrame.src = "User.html";
+            bydeviceFrame.src = "static/User.html";
             bydeviceFrame.height = "100%";
             bydeviceFrame.width = "100%";
             bydeviceFrame.scrolling = "no";
