@@ -1,0 +1,121 @@
+/* Style the table */
+
+h1 {
+    color: Green;
+}
+
+.scroll {
+    margin: 4px, 4px;
+    padding: 4px;
+    background-color: #f3f7f3;
+    width: 500px;
+    height: 600px;
+    overflow: scroll;
+}
+
+.canvas_1 {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-left: 40rem;
+    position: center;
+    margin-right: 10rem;
+    top: 1.5em;
+    font-weight: 400;
+    height: 400;
+    width: 400;
+    transform: translateX(-50%);
+    background-color: rgb(148, 180, 194);
+    border: 1px solid rgb(36, 22, 22);
+}
+
+.canvas_2 {
+    border-collapse: collapse;
+    border-spacing: 0;
+    position: right;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    top: 1.5em;
+    font-weight: 400;
+    height: 400;
+    width: 400;
+    transform: translateX(-50%);
+    background-color: rgb(7, 74, 64);
+    border: 1px solid rgb(36, 22, 22);
+}
+
+
+/* Style table headers and table data */
+
+.style-text {
+    text-align: center;
+    padding: 16px;
+    margin-top: 1rem;
+}
+
+.chart {
+    -fx-padding: 10px;
+    -fx-background-image: url("icon.png");
+}
+
+.chart-content {
+    -fx-padding: 30px;
+}
+
+.my-pie-chart {
+    position: fixed;
+    margin-top: 3rem;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background: conic-gradient(brown 0.00%, black 0.00% 0.55%, blue 0.55% 6.08%, green 6.08% 13.68%, yellow 13.68% 23.27%, orange 23.27% 40.47%, red 40.47%);
+}
+
+.scrollable {
+    padding: 0% 10%;
+    position: relative;
+    border: 1px solid gray;
+    overflow: hidden;
+    height: 400px;
+}
+
+.scrollable.showScroll::after {
+    position: absolute;
+    content: '';
+    top: 5%;
+    right: 7px;
+    height: 90%;
+    width: 3px;
+    background: rgba(224, 224, 255, .3);
+}
+
+.scrollable .content-wrapper {
+    width: 100%;
+    height: 100%;
+    padding-right: 50%;
+    overflow-y: scroll;
+}
+
+.scroller {
+    z-index: 5;
+    cursor: pointer;
+    position: absolute;
+    width: 10px;
+    border-radius: 5px;
+    background: rgb(111, 111, 190);
+    top: 0px;
+    right: 3px;
+    -webkit-transition: top .08s;
+    -moz-transition: top .08s;
+    -ms-transition: top .08s;
+    -o-transition: top .08s;
+    transition: top .08s;
+}
+
+.content {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

@@ -2,9 +2,204 @@
 <html>
 
 <head>
+    <title>
+        Charts demo!
+
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <link rel="stylesheet" href="./styles/comparisons.css">
+
+    <label form="ShowChart ">Choose a Chart:</label>
+
+    <select name="Chart " id="select_chart " onchange="favChart()">
+    <option value= "selection ">please select the type of chart...</option>
+    <option value= "pie ">Pie chart </option>
+    <option value="line ">Linechart</option>
+    <option value="bar ">barchart</option>
+</select>
 </head>
 
-<body id="comparisons" class="comparisons">
-    <h3>Comparisons!</h3>
+<body>
+
+
+    <center>
+        <h1>BarChart demo</h1>
+        <p> Your selected chart is :
+            <input type="text" id="favourite " size="20"> </p>
+
+        <div class="scroll ">
+            <h2>
+                <div>
+
+
+                    <canvas id="myChart"></canvas>
+
+
+
+                </div>
+
+
+            </h2>
+
+
+        </div>
+    </center>
+
+
+
+    <script>
+        function favChart() {
+            var select_chart = document.getElementById("select_chart ");
+
+            if (select_chart.selectedIndex == 1) {
+                document.getElementById("favourite ").value = select_chart.options[select_chart.selectedIndex].text;
+                var ctx1 = document.getElementById('myChart').getContext('2d');;
+                var myChart = new Chart(ctx1, {
+                    type: 'pie',
+                    data: {
+                        labels: ["Positive ", "Negative ", "Neutral "],
+                        datasets: [{
+                            data: [70, 10, 6],
+                            borderColor: [
+                                "#3cba9f ",
+                                "#ffa500 ",
+                                "#c45850 ",
+                            ],
+                            backgroundColor: [
+                                "rgb(60,186,159,0.1) ",
+                                "rgb(255,165,0,0.1) ",
+                                "rgb(190,88,80,0.1) ",
+                            ],
+                            borderWidth: 1,
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                            }],
+                            yAxes: [{
+                                display: false,
+                            }],
+                        }
+                    },
+                });
+
+            }
+
+            if (select_chart.selectedIndex == 2) {
+                document.getElementById("favourite ").value = select_chart.options[select_chart.selectedIndex].text;
+                var ctx2 = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx2, {
+                    type: 'line',
+                    data: {
+                        labels: ["Sunday ", "Monday ", "Tuesday ", "Wednesday ", "Thursday ", "Friday ", "Saturday "],
+                        datasets: [{
+                            data: [86, 114, 106, 106, 107, 111, 133],
+                            label: "Total ",
+                            borderColor: "rgb(62,149,205) ",
+                            backgroundColor: "rgb(62,149,205,0.1) ",
+                        }, {
+                            data: [70, 90, 44, 60, 83, 90, 100],
+                            label: "Accepted ",
+                            borderColor: "rgb(60,186,159) ",
+                            backgroundColor: "rgb(60,186,159,0.1) ",
+                        }, {
+                            data: [10, 21, 60, 44, 17, 21, 17],
+                            label: "Pending ",
+                            borderColor: "rgb(255,165,0) ",
+                            backgroundColor: "rgb(255,165,0,0.1) ",
+                        }, {
+                            data: [6, 3, 2, 2, 7, 0, 16],
+                            label: "Rejected ",
+                            borderColor: "rgb(196,88,80) ",
+                            backgroundColor: "rgb(196,88,80,0.1) ",
+                        }]
+                    },
+                });
+            }
+
+
+
+            if (select_chart.selectedIndex == 3) {
+                document.getElementById("favourite ").value = select_chart.options[select_chart.selectedIndex].text;
+                var ctx = document.getElementById("myChart");
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12"],
+                        datasets: [{
+                            label: '# of Tomatoes',
+                            data: [12, 19, 3, 5, 2, 3, 20, 3, 5, 6, 2, 1],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    maxRotation: 90,
+                                    minRotation: 80
+                                },
+                                gridLines: {
+                                    offsetGridLines: true // à rajouter
+                                }
+                            }, {
+                                position: "top",
+                                ticks: {
+                                    maxRotation: 90,
+                                    minRotation: 80
+                                },
+                                gridLines: {
+                                    offsetGridLines: true // et matcher pareil ici
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+
+            }
+        }
+    </script>
+
+
 </body>
+
+</html>
