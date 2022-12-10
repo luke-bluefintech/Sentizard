@@ -2,15 +2,15 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="./styles/user.css">
-    <script type="text/javascript" src=https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json></script>
-    <title>Twitter Data Pulling</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-      <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="./styles/user.css">
+  <script type="text/javascript" src=https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json></script>
+  <title>Twitter Data Pulling</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <h2>Twitter Data Pulling</h2>
@@ -20,23 +20,29 @@
       <input type="text" class="form-control" placeholder="Keyword e.g Iphone 14">
     </div>
     <div class="col">
+    </div>
+    <input type=date min=2019-09-08>
+    <input type=date min=2019-09-08>
+    <select id="cities">
+      <option value="--Select a City--">--Select a City--</option>
+    </select>
+    <br />
   </div>
-      <input type=date min=2019-09-08>
-      <input type=date min=2019-09-08>
-      <select id="cities">
-    <option value="--Select a City--">--Select a City--</option>
-</select>
+  <div class="row">
+    <div class="col">
+      <button>Submit</button>
+    </div>
   </div>
 </form>
 
 <script>
- $(document).ready(function() {
-var results = $.getJSON("cities.json", function(data) {
-    for(var i = 0; i < data.length; i++) {
+  $(document).ready(function () {
+    var results = $.getJSON("cities.json", function (data) {
+      for (var i = 0; i < data.length; i++) {
         $("#cities").append('<option value="' + data[i].name + '">' + data[i].name + '</option');
-    }
-});
-'''
+      }
+    });
+    '''
 How to save json as java script variable
-'''
+    '''
 </script>
