@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 from gensim.models import Word2Vec
 from .preprocess import Preprocess
-from .models import padding, compute_w2v_matrix, seq_to_vector, c_lstm, svm
+from .models import padding, compute_w2v_matrix, seq_to_vector, c_lstm, svm, lr
 
 
 class Backend():
@@ -24,6 +24,7 @@ class Backend():
         # Models
         self.svm = svm()
         self.c_lstm = c_lstm()
+        self.lr = lr()
 
     def analyze_sentiment(self, text, selected_model="C-LSTM"):
         # Pre-process text
@@ -42,6 +43,13 @@ class Backend():
             input_seq = padding(tokenized_sequence, self.padding_length)
             vec = seq_to_vector(self.w2v_matrix, np.array([input_seq]))
             result = float(self.svm.predict(vec)[0])
+
+        # Logistic Regression model
+        elif selected_model == "lr":
+            input_seq = padding(tokenized_sequence, self.padding_length)
+            vec = seq_to_vector(self.w2v_matrix, np.array([input_seq]))
+            result = float(self.lr.predict(vec)[0])
+
 
         # Return score (0 - 1)
         return result

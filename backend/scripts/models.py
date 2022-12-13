@@ -49,3 +49,9 @@ def svm():
     model_path = parent_dir + '/content/model/SVM.sav'
     model = pickle.load(open(model_path, 'rb'))
     return model
+
+def lr():
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    model_path = parent_dir + '/content/model/lr.sav'
+    model = pickle.load(open(model_path, 'rb'))
+    return model
