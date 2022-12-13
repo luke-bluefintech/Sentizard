@@ -23,11 +23,11 @@
     <div class="response-form">
         <h2>Twitter Data Pulling</h2>
         <form class="grid" action="/result" method="POST">
-            <label for="sentence"> Enter a tweet phrase: </label>
-            <input type="text" id="sentence" name="sentence">
-            <input type=date min=2019-09-08 name="date1">
-            <input type=date min=2019-09-08 name="date2">
-            <select id="city" name="city">
+            <label for="sentence"> Enter a Phrase from a Tweet: </label>
+            <input class="input-phrase" type="text" id="sentence" name="sentence">
+            <input class="input-date" type=date min=2019-09-08 name="date1">
+            <input class="input-date" type=date min=2019-09-08 name="date2">
+            <select class="dropdown-input" id="city" name="city">
                 <option value="All Cities">All Cities</option>
                 <option value="Boston">Boston</option>
                 <option value="New York">New York</option>
@@ -35,7 +35,7 @@
                 <option value="Chicago">Chicago</option>
             </select>
             <label>Algorithm: </label>
-            <select id="algorithm" name="algorithm">
+            <select class="dropdown-input" id="algorithm" name="algorithm">
                 <option value="C-LSTM">C-LSTM</option>
                 <option value="SVM">SVM</option>
                 <option value="BiLSTM">BiLSTM</option>

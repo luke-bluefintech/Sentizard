@@ -55,8 +55,8 @@ col {
     width: 91.75vw;
     height: 86vh;
     margin: 0rem;
-    overflow-y:hidden;
-    overflow-x:hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .input-test {
@@ -78,7 +78,7 @@ h1 {
 
 h2 {
     position: relative;
-    color: rgb(0,172,238);
+    color: rgb(0, 172, 238);
     font-weight: 600;
     bottom: 9px;
 }
@@ -154,6 +154,23 @@ input {
     color: rgb(42, 87, 131);
 }
 
+.input-date,
+.dropdown-input {
+    color: gray;
+    border: 1px solid gray;
+    height: 30px;
+}
+
+.input-phrase {
+    width: 30vw;
+    height: 32px;
+    padding: 14px 20px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+}
+
 .left {
     width: 25%;
 }
@@ -192,7 +209,7 @@ option {
 .response-form {
     position: relative;
     z-index: 20;
-    margin-top: 100px;
+    margin-top: 110px;
     margin-left: 10%;
 }
 
@@ -232,7 +249,7 @@ a:focus {
     position: fixed;
     top: 0;
     padding: 15px 10px;
-    background-image: linear-gradient(to right, rgb(0,172,238), rgb(0, 128, 177));
+    background-image: linear-gradient(to right, rgb(0, 172, 238), rgb(0, 128, 177));
     height: 3rem;
     width: 100%;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -345,12 +362,14 @@ span {
     padding-bottom: 25px;
 }
 
-#sidebar ul li .active, a:hover {
+#sidebar ul li .active,
+a:hover {
     color: rgb(227, 227, 227);
     background: gray;
 }
 
-#sidebar ul li .active i, a:hover i{
+#sidebar ul li .active i,
+a:hover i {
     color: rgb(227, 227, 227);
 }
 
