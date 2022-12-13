@@ -37,11 +37,23 @@ def seq_to_vector(w2v_matrix, token_seqs):
     return transformed_X
 
 
+def lstm():
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    model_path = parent_dir + '/content/model/Pure-LSTM.h5'
+    model = keras.models.load_model(model_path)
+    return model
+
 def c_lstm():
     parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     model_path = parent_dir + '/content/model/C-LSTM.h5'
     model = keras.models.load_model(model_path)
     return model
+
+def bi_lstm():
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    model_path = parent_dir + '/content/model/Bi_LSTM.h5'
+    model = keras.models.load_model(model_path)
+    return model    
 
 
 def svm():
