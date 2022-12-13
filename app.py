@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request
-#from backend.scripts.nn_training import Bi_LSTM
+#from backend.scripts.nn_training_2 import Bi_LSTM
 from backend.scripts.backend import Backend
 
 app = Flask(__name__)
@@ -26,9 +26,10 @@ def result():
     elif algorithm == "SVM":
         val = backend.analyze_sentiment(sentence, "SVM")
     elif algorithm == "BiLSTM":
-        print("BiLSTM!")
+        val = "BiLSTM!"
         #val = Bi_LSTM()
-    sentence = str(val)
+    roundedVal = round(val, 3)
+    sentence = str(roundedVal)
 
     return render_template('index.html', sentence=sentence, date1=date1, date2=date2, city=city, algorithm=algorithm)
 

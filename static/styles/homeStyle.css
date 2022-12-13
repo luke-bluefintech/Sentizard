@@ -72,6 +72,10 @@ col {
     left: .3rem;
 }
 
+.file_submit {
+    color: rgb(40, 40, 40)
+}
+
 h1 {
     font-size: 20px;
 }
@@ -85,8 +89,8 @@ h2 {
 
 h3 {
     position: relative;
-    font-size: .9rem;
-    top: 8em;
+    font-size: 1.2rem;
+    margin-bottom: 0;
 }
 
 h4 {
@@ -156,9 +160,15 @@ input {
 
 .input-date,
 .dropdown-input {
-    color: gray;
-    border: 1px solid gray;
+    color: rgb(100, 100, 100);
+    border: 1px solid rgb(200, 200, 200);
     height: 30px;
+    padding: 0 5px;
+    border-radius: 8px;
+}
+
+.input-date {
+    width: 115px;
 }
 
 .input-phrase {
@@ -166,9 +176,14 @@ input {
     height: 32px;
     padding: 14px 20px;
     margin: 5px 0;
+    color: rgb(60, 60, 60);
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 16px;
+}
+
+.input-phrase:hover {
+    background-color: rgb(240, 240, 240)
 }
 
 .left {
@@ -194,6 +209,15 @@ option {
     width: 23rem;
 }
 
+.result-box {
+    position: relative;
+    outline: 1px solid rgb(50, 50, 50);
+    top: 3em;
+    width: 40%;
+    padding: 15px 15px;
+    border-radius: 20px;
+}
+
 #userProfile {
     position: absolute;
     right: 0rem;
@@ -204,6 +228,24 @@ option {
 
 #userProfile:hover {
     background-color: transparent;
+}
+
+.view-detailed-summary {
+    background-image: linear-gradient(to right, rgb(0, 172, 238), rgb(0, 128, 177));
+    border: 1px solid rgb(0, 128, 177);
+    color: white;
+    padding: 4px 10px;
+    margin: 8px 0;
+    cursor: pointer;
+    width: 20%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.view-detailed-summary:hover {
+    background-image: linear-gradient(to right, rgb(0, 128, 177), rgb(0, 98, 137));
 }
 
 .response-form {
@@ -253,6 +295,7 @@ a:focus {
     height: 3rem;
     width: 100%;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 40;
 }
 
 .navbar-btn {

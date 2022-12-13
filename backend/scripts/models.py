@@ -49,3 +49,5 @@ def svm():
     model_path = parent_dir + '/content/model/SVM.sav'
     model = pickle.load(open(model_path, 'rb'))
     return model
+
+    
