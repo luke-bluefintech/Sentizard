@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
         integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="./helper_functions/auth.js"></script>
     <script src="https://use.fontawesome.com/b8af91ce87.js"></script>
     <script src="https://kit.fontawesome.com/d1d35104b4.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="./static/styles/homeStyle.css">
@@ -20,12 +19,44 @@
     <title>Sentizard</title>
 </head>
 
-<body id="homepage" class="homepage" onload="setButton('User')">
+<body id="homepage" class="homepage" style="z-index: 40; overflow: hidden;" onload="setButton('User')">
+    <div class="response-form">
+        <h2>Twitter Data Pulling</h2>
+        <form class="grid" action="/result" method="POST">
+            <label for="sentence"> Enter a tweet phrase: </label>
+            <input type="text" id="sentence" name="sentence">
+            <input type=date min=2019-09-08 name="date1">
+            <input type=date min=2019-09-08 name="date2">
+            <select id="city" name="city">
+                <option value="All Cities">All Cities</option>
+                <option value="Boston">Boston</option>
+                <option value="New York">New York</option>
+                <option value="Los Angeles">Los Angeles</option>
+                <option value="Chicago">Chicago</option>
+            </select>
+            <label>Algorithm: </label>
+            <select id="algorithm" name="algorithm">
+                <option value="C-LSTM">C-LSTM</option>
+                <option value="SVM">SVM</option>
+                <option value="BiLSTM">BiLSTM</option>
+                <option value="CLSTM">CLSTM</option>
+            </select>
+            {% if sentence %}
+            <center>
+                <h3 style="color: blue;" class="let_space">The predicted setiment result is: {{sentence}}</h3>
+            </center>
+            {% endif %}
+
+            <center><input class="file_submit" type="Submit"></center>
+
+        </form>
+    </div>
     <div class="enlargedFrame" id="enlargedFrame">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
             <ul class="nav navbar-nav abs-left-x">
                 <i class="nav-item">
-                    <img class="wand-icon" src="https://iteration2code.s3.us-east-2.amazonaws.com/Wand_Icon.png" alt="Wand"></img>
+                    <img class="wand-icon" src="https://iteration2code.s3.us-east-2.amazonaws.com/Wand_Icon.png"
+                        alt="Wand"></img>
                     Sentizard
                 </i>
             </ul>
@@ -46,11 +77,6 @@
                                     <i class="fas fa-chart-line"></i>
                                     Comparisons
                                 </a>
-                                <a href="#" id="Compare" onclick="setButton(id)">
-                                    &nbsp
-                                    <i class="fa-solid fa-a"></i>
-                                    Sentence Analyzer
-                                </a>
                             </li>
                         </h4>
                     </ul>
@@ -58,13 +84,21 @@
             </div>
             <div class="col-11">
                 <div class="wrapper" id="borderwrap"></div>
+                <div class="user-container" style="z-index:15">
+                    <form>
+                        <div class="row">
+                            <div class="col">
+                                <div class="displaywindow" id="displaywindow" style="z-index:10"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     <div class="row no-gutters">
         <div class="col-1"></div>
         <div class="col-11">
-            <div class="displaywindow" id="displaywindow"></div>
         </div>
     </div>
     <ul>
@@ -85,9 +119,12 @@
 </body>
 
 <script>
-    $(document).ready(function () {
-        window.history.pushState('page2', 'Title', '/data');
-    });
+    function resultUrl() {
+        console.log("Here");
+        window.location.href += "http://localhost:5000/result";
+    }
+
+    var res = 0;
 
     // Each sidebar button
     var sidebarButtons = ["User", "By Device", "Compare"];
@@ -114,24 +151,6 @@
         var buttonToActivate = document.getElementById(button);
         buttonToActivate.className += " active";
         document.getElementById("displaywindow").innerHTML = "";
-        if (button === "Compare") {
-            var compareFrame = document.createElement('iframe');
-            document.getElementById('displaywindow').style.width = "91.666666%";
-            compareFrame.class = "comparisonwindow";
-            compareFrame.id = "sentenceAnalyzer.html";
-            compareFrame.src = "static/SentenceAnalyzer.html";
-            compareFrame.height = "100%";
-            compareFrame.width = "100%";
-            compareFrame.scrolling = "no";
-            compareFrame.style.marginLeft = '0rem';
-            compareFrame.style.marginTop = '0rem';
-            compareFrame.style.border = 'none';
-            document.getElementById('displaywindow').appendChild(compareFrame);
-            compareFrame.style.visibility = 'visible';
-            /* for (var i = 0; i < links.length; i++) {
-                document.getElementById(links[i]).style.visibility = 'visible';
-            } */
-        }
         if (button === "By Device") {
             document.getElementById('borderwrap').style.display = 'inline';
             var bydeviceFrame = document.createElement('iframe');
@@ -145,6 +164,7 @@
             bydeviceFrame.style.marginLeft = '0rem';
             bydeviceFrame.style.marginTop = '0rem';
             bydeviceFrame.style.border = 'none';
+            bydeviceFrame.style.backgroundColor = 'white';
             document.getElementById('displaywindow').appendChild(bydeviceFrame);
             bydeviceFrame.style.visibility = 'visible';
             /* for (var i = 0; i < links.length; i++) {
@@ -153,17 +173,18 @@
         }
         if (button === "User") {
             document.getElementById('borderwrap').style.display = 'inline';
-            var bydeviceFrame = document.createElement('iframe');
+            var bydeviceFrame = document.createElement('div');
             document.getElementById('displaywindow').style.width = "91.666666%";
             bydeviceFrame.class = "UserWindow";
             bydeviceFrame.id = "User.html";
-            bydeviceFrame.src = "static/User.html";
+            bydeviceFrame.src = "";
             bydeviceFrame.height = "100%";
             bydeviceFrame.width = "100%";
             bydeviceFrame.scrolling = "no";
             bydeviceFrame.style.marginLeft = '0rem';
             bydeviceFrame.style.marginTop = '0rem';
             bydeviceFrame.style.border = 'none';
+            bydeviceFrame.style.zIndex = "20";
             document.getElementById('displaywindow').appendChild(bydeviceFrame);
             bydeviceFrame.style.visibility = 'visible';
         }

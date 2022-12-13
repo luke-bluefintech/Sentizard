@@ -1,13 +1,7 @@
 from flask import Flask, render_template, url_for, request
-# load backend code
-import os
-import sys
 from backend.scripts.backend import Backend
 
-
-# get current path
-curr_dir = os.path.abspath('')
-app = Flask(__name__, template_folder=curr_dir)
+app = Flask(__name__)
 
 
 @app.route('/')
@@ -18,25 +12,23 @@ def home():
 
 @app.route('/result', methods=['POST', 'GET'])
 def result():
-    # Get the submitted sentence
-    input_data = request.form.to_dict()
-    # print(output)
-    sentence = input_data["sentence"]
-    model_name = "C-LSTM"
+    output = request.form.to_dict()
 
-    ##############################
-    # Analyze the sentiment of the sentence
-    # val = backend.analyze_sentiment(sentence, model_name)
-    # val_str = str(val)
-    val_str = '100'
-    ##############################
+    sentence = output["sentence"]
+    date1 = output["date1"]
+    date2 = output["date2"]
+    city = output["city"]
+    algorithm = output["algorithm"]
 
-    return render_template('index.html', res=val_str)
+    if algorithm == "C-LSTM":
+        val = backend.analyze_sentiment(sentence, "C-LSTM")
+    elif algorithm == "SVM":
+        val = backend.analyze_sentiment(sentence, "SVM")
+    sentence = str(val)
+
+    return render_template('index.html', sentence=sentence, date1=date1, date2=date2, city=city, algorithm=algorithm)
 
 
 if __name__ == "__main__":
-    # Load backend
-    # backend = Backend()
-
-    # Launch website
+    backend = Backend()
     app.run(debug=True)

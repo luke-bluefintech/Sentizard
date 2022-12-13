@@ -50,7 +50,7 @@ col {
 
 .displaywindow {
     position: fixed;
-    top: 120.5px;
+    top: 80.5px;
     right: 0;
     width: 91.75vw;
     height: 86vh;
@@ -78,15 +78,15 @@ h1 {
 
 h2 {
     position: relative;
-    left: 5%;
+    color: rgb(0,172,238);
+    font-weight: 600;
     bottom: 9px;
 }
 
 h3 {
     position: relative;
     font-size: .9rem;
-    top: 2.55em;
-    color: gray;
+    top: 8em;
 }
 
 h4 {
@@ -189,6 +189,13 @@ option {
     background-color: transparent;
 }
 
+.response-form {
+    position: relative;
+    z-index: 20;
+    margin-top: 100px;
+    margin-left: 10%;
+}
+
 #submitButton {
     position: relative;
     border-radius: .4em;
@@ -223,6 +230,7 @@ a:focus {
 
 .navbar {
     position: fixed;
+    top: 0;
     padding: 15px 10px;
     background-image: linear-gradient(to right, rgb(0,172,238), rgb(0, 128, 177));
     height: 3rem;
@@ -243,6 +251,12 @@ a:focus {
     margin: 40px 0;
 }
 
+.user-container {
+    position: absolute;
+    padding: 0;
+    margin-top: 6rem;
+}
+
 i,
 span {
     display: inline-block;
@@ -259,7 +273,7 @@ span {
     border-bottom: 1px dotted gray;
     border-right: 1px dotted gray;
     background-image: linear-gradient(to right, rgb(245, 245, 245), rgb(227, 227, 227));
-    height: 2rem;
+    height: 2.05rem;
 }
 
 #sidebar {
