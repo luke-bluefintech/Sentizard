@@ -27,67 +27,211 @@
     onload="setButton('User')">
     <div class="response-form" id="response-form">
         <center style="position: relative; right:50px">
-            <h2>Twitter Data Pulling</h2>
+            <h2>Twitter Sentiment Analysis</h2>
             <form class="grid" action="/result" method="POST">
                 <label for="sentence"> Enter a Phrase: </label>
                 <input class="input-phrase" type="text" id="sentence" name="sentence">
                 <label style="margin-left:10px">Algorithm: </label>
                 <select class="dropdown-input" id="algorithm" name="algorithm">
+                    <option value="LSTM">LSTM</option>
                     <option value="C-LSTM">C-LSTM</option>
+                    <option value="Bi-LSTM">Bi-LSTM</option>
                     <option value="SVM">SVM</option>
-                    <option value="BiLSTM">BiLSTM</option>
-                    <option value="CLSTM">CLSTM</option>
+                    <option value="Logistic Regression">Logistic Regression</option>
                 </select>
                 <input style="margin-left:10px" class="file_submit" type="Submit"> <br />
-                <label>Start Date: </label>
-                <input class="input-date" type=date min=2019-09-08 name="date1">
-                <label style="margin-left:10px">End Date: </label>
-                <input class="input-date" type=date min=2019-09-08 name="date2">
-                <select style="margin-left:10px" class="dropdown-input" id="city" name="city">
-                    <option value="All Cities">All Cities</option>
-                    <option value="Boston">Boston</option>
-                    <option value="New York">New York</option>
-                    <option value="Los Angeles">Los Angeles</option>
-                    <option value="Chicago">Chicago</option>
-                </select>
-                {% if sentence %}
-                <div class="result-box">
-                    <h3 class="let_space">Your predicted setiment result with {{algorithm}} is:
-                        {{sentence}}</h3>
-                </div>
-                <p style="margin-top: 60px">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.</p>
-                {% endif %}
-            </form>
         </center>
+        {% if sentence %}
+        <center>
+            <p
+                style="margin-top: 40px; margin-left: 0px; padding-left: 20px; padding-right: 80px; color: rgb(80, 80, 80); font-size: larger;">
+                You entered phrase "{{sentence}}" and selected {{algorithm}} to evaluate the sentiment. This
+                model found that the sentiment is {{decimalVal}}, which means that the phrase is most likely
+                <u>{{category}}</u>.<br /><br />
+            </p>
+        </center>
+        <p style="margin-left: 0px; padding-left: 20px; padding-right: 80px;">
+            The models were trained and tested on a dataset of 1.6 million tweets from Kaggle
+            <a class="body-link" target="_blank" href="https://www.kaggle.com/datasets/kazanova/sentiment140">
+                https://www.kaggle.com/datasets/kazanova/sentiment140
+                <a>. The data — and your input — were pre-processed by:<br />
+        </p>
+        <ul style="margin-left: 30px; padding-left: 20px; padding-right: 80px;">
+            <li>Converting all characters to lowercase </li>
+            <li>Removing stop words</li>
+            <li>
+                Replacing all URLs with '&lt;url&gt;'</li>
+            <li>
+                Replacing all @Username to '&lt;user&gt;'</li>
+            <li>
+                Replacing 3 or more consecutive letters with 2 letters</li>
+            <li>
+                Replacing all emojis</li>
+            <li>
+                Removing contractions</li>
+            <li>
+                Removing nonalphabetics and replacing them with a space</li>
+        </ul>
+
+        <p style="margin-left: 0px; padding-left: 20px; padding-right: 80px;">
+            We used Word2Vec to vectorize the tweets and the inputs. Word2Vec uses a
+            neural network trained on a large amount of text (in this case the dataset of
+            tweets) to determine relations between words. Below is an example of how this may occur:
+
+            <br /><br />
+
+            <img style="outline: 1px solid black; width:500px;"
+                src="https://sentizard.s3.amazonaws.com/King_Man_Woman.png"><br />
+
+            There are many similarities between “king” and “man,” and between “man” and “woman,”
+            but fewer between “king” and “woman.”<br /><br />
+
+        </p>
+        <div style="margin-left: 0px; padding-left: 20px; padding-right: 80px;" class="model-name">SVM</div>
+        <p style="margin-left: 0px; padding-left: 20px; padding-right: 80px;">
+            SVM works by finding the best line or "hyperplane" that can divide a set of
+            points into two classes. The line is chosen in a way that maximizes the distance
+            between the points closest to the line, known as the "support vectors". Once the
+            best line is found, new examples can be easily classified by seeing on which side of
+            the line they fall.<br /><br />
+            SVM has a few key advantages over other algorithms. One is that it can handle data
+            that is not linearly separable, using a technique called the kernel trick. Another
+            is that it is relatively memory efficient, because it only uses a subset of the
+            training data (the support vectors) to make predictions.<br /><br />
+
+            PCA, or Principal Component Analysis, is a dimensionality reduction technique that
+            can be used to reduce the number of dimensions in a dataset while retaining as much
+            of the original information as possible. In the context of visualizing an SVM, PCA
+            can be used to project the data from a high-dimensional space onto a 2D plane,
+            allowing you to visualize the decision boundary learned by the SVM. <br /><br />
+            To use PCA for this purpose, we first apply PCA to the training data to find the two
+            principal components that capture the most variance in the data. We then project the
+            training data onto these two components to obtain a 2D representation of the data.
+            Next, We train an SVM on the 2D data and use it to predict the class labels for the
+            training examples. Finally, we plot the training examples and the decision boundary
+            learned by the SVM on the 2D plane.<br /><br />
+
+            <img style="outline: 1px solid black; width:500px;"
+                src="https://sentizard.s3.amazonaws.com/PCA_Graph_1.png">
+            <img style="outline: 1px solid black; width:500px; margin-left: 20px;"
+                src="https://sentizard.s3.amazonaws.com/PCA_Graph_2.png"><br /><br />
+            <img style="outline: 1px solid black; width:500px;"
+                src="https://sentizard.s3.amazonaws.com/PCA_Graph_3.png"><br /><br />
+
+
+            It's important to note that this approach is only suitable for visualizing the SVM,
+            and may not necessarily produce the best results for other tasks such as
+            classification or regression. Figures above illustrates decision boundaries of
+            different SVM models with reduced dataset; linear SVM, SVM with Radial Basis
+            Function kernel, penalization parameter, C = 1, and SVM with Radial Basis Function
+            kernel, penalization parameter, C = 10, respectively.<br /><br />
+
+
+
+        </p>
+        <div style="margin-left: 0px; padding-left: 20px; padding-right: 80px;" class="model-name">LSTM</div>
+        <p style="margin-left: 0px; padding-left: 20px; padding-right: 80px;">
+            Long Short-Term Memory (LSTM) networks is a kind of RNN model that deals with
+            the vanishing gradient problem. It learns to keep the relevant content of the
+            sentence and forget the non relevant ones based on training. This model preserves
+            gradients over time using dynamic gates that are called memory cells. At each input
+            state, a gate can erase, write and read information from the memory cell. Gate
+            values are computed based on linear combinations of the current input and the
+            previous state.<br />
+            The hidden state acts as the neural networks memory. It holds information on
+            previous data the network has seen before.<br />
+            The operations on the information is controlled by three corresponding gates:<br />
+            <b style="font-weight:bold">Forget gate:</b> Controls which content to keep and which should be forgotten
+            from prior
+            steps.<br />
+            <b style="font-weight:bold">Input Gate:</b> Controls which information from the current step is relevant to
+            add to
+            the next steps.<br />
+            <b style="font-weight:bold">Output Gate:</b> Controls what should be the next hidden state, i.e. the output
+            of the
+            current step.<br /><br />
+
+
+        </p>
+        <div style="margin-left: 0px; padding-left: 20px; padding-right: 80px;" class="model-name">C-LSTM</div>
+        <p style="margin-left: 0px; padding-left: 20px; padding-right: 80px;">
+            The C-LSTM model is the combination of a convolutional neural network (CNN)
+            and a recurrent neural network (LSTM), inheriting the strengths of both network
+            structures [3]. The CNN module is used to extract higher-level phrase representation
+            while the LSTM captures long-term dependencies over sequences. The C-LSTM structure
+            is shown in Figure X.<br /><br />
+
+            <img style="outline: 1px solid black; width:500px;"
+                src="https://sentizard.s3.amazonaws.com/Archiecture_of_CLSTM.png"><br />
+            The architecture of C-LSTM for sentence modeling.<br /><br />
+            The sentence input is reformulated as a matrix, then fed into a CNN network to
+            extract features, which are later used as the input of an LSTM network. The CNN
+            module takes the input sentence matrix and extracts a new feature representation of
+            the sentence. By combining and reorganizing the feature maps, we can obtain the new
+            feature representation of the sentences. The new higher-order window representation
+            is later fed into the LSTM network.<br />
+            The LSTM module is the same as the originally proposed architecture. At each time
+            step, multiple gates, including input, forget and output gates, are collectively
+            used and decide how to update the memory cell and the current hidden state. The
+            network unit structure is shown in Figure Y.<br /><br />
+
+            <img style="outline: 1px solid black; width:500px;"
+                src="https://sentizard.s3.amazonaws.com/Architecture_of_LSTM.png"><br />
+            The architecture of the LSTM unit.<br /><br />
+            The model will be trained to minimize cross-entropy by using stochastic gradient
+            descent (SGD) with RMSprop. The sentences input would be converted into vectors
+            using word2vec, and would be padded and truncated to fit the network input size.
+            Dropout and L2 weight regularization would be applied to prevent co-adaptation and
+            over-fitting.<br /><br />
+
+        </p>
+        <div style="margin-left: 0px; padding-left: 20px; padding-right: 80px;" class="model-name">Bi-LSTM</div>
+        <p style="margin-left: 0px; padding-left: 20px; padding-right: 80px;">
+            The Bidirectional LSTM (BiLSTM) model maintains two separate states for forward
+            and backward inputs that are generated by two different LSTMs. The first LSTM is a
+            regular sequence that starts from the beginning of the sentence, while in the second
+            LSTM, the input sequence is fed in the opposite order. The purpose behind
+            bi-directional networks is to capture the information of surrounding inputs. Bi-directional usually
+            learns faster than a one-directional approach, though it depends on the task.<br />
+        </p>
+        </p>
+        <div style="margin-left: 0px; padding-left: 20px; padding-right: 80px;" class="model-name">Logistic Regression
+        </div>
+        <p style="margin-left: 0px; padding-left: 20px; padding-right: 80px;">
+            A logistic regression uses a log function to determine a binary classification. It predicts the probability
+            that an input is a given output. In this case the output is the probability that the sentiment of the
+            statement or Tweet is positive. It assumes that the logarithmic odds are a linear function of x. The LR
+            model trained for this project is from SciKitLearn for Machine Learning in Python. It had an accuracy of 76%
+            on the test data. Through training, the model finds a value for theta such that the equation
+            <img style="width:150px;" src=https://sentizard.s3.amazonaws.com/Log_Reg_Eq.png>
+            predicts the sentiment as either more likely to be positive or negative through gradient descent.
+        </p>
+        <div style="margin-left: 0px; padding-left: 20px; padding-right: 80px;" class="model-name">Website</div>
+        <p style="margin-left: 0px; padding-left: 20px; padding-right: 80px;">
+            This website utilizes Flask to link together our front end and back end. The front end is managed through
+            the main flask python file, which calls our HTML file to display. Flask can retrieve values from our front
+            end and send them to our back end algorithms, which is how we were able to create dynamic phrase analysis.
+            Once our back end returns a value, the webpage routes to the "/result" page, and the detailed summary is
+            displayed.
+        </p>
+        <br /><br /><br /><br />
+        {% endif %}
+        </form>
     </div>
     <div class="comparisons-container" id="comparisons-container" style="position:relative; top:0">
         <div class="ComparisonsWindow" id="Comparisions.html" scrolling="no"
-            style="height: 90vh; width: 91.666%; position: fixed; left: 8.333%;  top: 81px; border: 1px solid black; z-index: 30; visibility: hidden;">
-            <label form="ShowChart ">Choose a Chart:</label>
-
-            <select name="Chart " id="select_chart " onchange="favChart()">
-                <option value="selection ">please select the type of chart...</option>
-                <option value="pie ">Pie chart</option>
-                <option value="line ">Linechart</option>
-                <option value="bar ">barchart</option>
-                <center>
-                    <h1>BarChart demo</h1>
-                    <p> Your selected chart is :
-                        <input type="text" id="favourite " size="20">
-                    </p>
-                    <div class="scroll ">
-                        <h2>
-                            <div>
-                                <canvas id="myChart"></canvas>
-                            </div>
-                        </h2>
-                    </div>
-                </center>
+            style="width: 91.666%; position: fixed; left: 150px; top: 100px; z-index: 30; visibility: hidden;">
+            <div>
+                <img class="comparisons-images" src="https://sentizard.s3.amazonaws.com/accuracy-epoch01.png" />
+                <img class="comparisons-images" src="https://sentizard.s3.amazonaws.com/loss-epoch.png" /><br />
+                <label style="color:rgb(100, 100, 100); font-size:.9rem;">Model Accuracy</label>
+                <label style="color:rgb(100, 100, 100); font-size:.9rem;margin-left:348px">Model Loss</label><br />
+                <img class="comparisons-images" src="https://sentizard.s3.amazonaws.com/data_distribution.png" />
+                <img style="border: 1px solid black; width: 400px; height: 120px; margin-right: 50px;"
+                    src="https://sentizard.s3.amazonaws.com/tweets.png" /><br />
+                <label style="color:rgb(100, 100, 100); font-size:.9rem;">Distribution of Data</label>
+                <label style="color:rgb(100, 100, 100); font-size:.9rem;margin-left:330px">Sample Tweets</label>
+            </div>
         </div>
     </div>
     <div class="view-summary" id="view-summary"
@@ -112,12 +256,12 @@
                     <ul class="list-unstyled components">
                         <h4>
                             <li>
-                                <a href="#" id="User" onclick="setButton(id)">
+                                <a class="sidebar-link" href="#" id="User" onclick="setButton(id)">
                                     &nbsp
                                     <i class="fa-solid fa-magnifying-glass-chart"></i>
                                     User
                                 </a>
-                                <a href="#" id="Comparisons" onclick="setButton(id)">
+                                <a class="sidebar-link" href="#" id="Comparisons" onclick="setButton(id)">
                                     &nbsp
                                     <i class="fas fa-chart-line"></i>
                                     Comparisons
@@ -128,7 +272,11 @@
                 </nav>
             </div>
             <div class="col-11">
-                <div class="wrapper" id="borderwrap" style="z-index:40"></div>
+                <div class="wrapper" id="borderwrap" style="z-index:40">
+                    <div style="padding-left:10px; color: gray; position: absolute; top: 18%;font-size:smaller">
+                        Welcome to Sentizard — the Twitter sentiment wizard!
+                    </div>
+                </div>
                 <div class="user-container">
                     <form>
                         <div class="row">
@@ -146,19 +294,6 @@
         <div class="col-11">
         </div>
     </div>
-    <ul>
-        <a id=0 href="#" target="_blank" style="display:none;">Alexa Usage</a>
-        <a id=1 href="#" target="_blank" style="display:none;">Active Devices</a>
-        <a id=2 href="#" target="_blank" style="display:none;">Methods per Day</a>
-        <a id=3 href="#" target="_blank" style="display:none;">DSN by Month</a>
-        <a id=4 href="#" target="_blank" style="display:none;">Interactions per Day</a>
-        <a id=5 href="#" target="_blank" style="display:none;">New Devices by Month</a>
-        <a id=6 href="#" target="_blank" style="display:none;">Total ACK Usage</a>
-        <a id=7 href="#" target="_blank" style="display:none;">Usage Methods</a>
-        <a id=8 href="#" target="_blank" style="display:none;">Methods per Month</a>
-        <a id=9 href="#" target="_blank" style="display:none;">Average Interactions by Month</a>
-        <a id=10 href="./Comparisons.html" target="_blank" style="display:none;">Comparison</a></li>
-    </ul>
     <div class="getdocdiv" id="getdocdiv"></div>
     </div>
 </body>
@@ -167,18 +302,6 @@
 
     // Each sidebar button
     var sidebarButtons = ["User", "Comparisons"];
-
-    // Links to each graph
-    var links = ["AlexaUsage.html",
-        "DailyActiveDevices.html",
-        "DayOfWeek.html",
-        "DSNbyMonth.html",
-        "InteractionDay.html",
-        "NewDSNMonth.html",
-        "TotalACKUsage.html",
-        "UsageMethods.html",
-        "MonthMethods.html",
-        "AvgInteractionsMonthly.html"];
 
     // Sets buttons to correct state
     function setButton(button) {
@@ -195,148 +318,6 @@
         } else if (button === "User") {
             document.getElementById('response-form').style.visibility = "visible";
             document.getElementById('Comparisions.html').style.visibility = "hidden";
-        }
-    }
-
-    function favChart() {
-        var select_chart = document.getElementById("select_chart ");
-        if (select_chart.selectedIndex == 1) {
-            document.getElementById("favourite ").value = select_chart.options[select_chart.selectedIndex].text;
-            var ctx1 = document.getElementById('myChart').getContext('2d');;
-            var myChart = new Chart(ctx1, {
-                type: 'pie',
-                data: {
-                    labels: ["Positive ", "Negative ", "Neutral "],
-                    datasets: [{
-                        data: [70, 10, 6],
-                        borderColor: [
-                            "#3cba9f ",
-                            "#ffa500 ",
-                            "#c45850 ",
-                        ],
-                        backgroundColor: [
-                            "rgb(60,186,159,0.1) ",
-                            "rgb(255,165,0,0.1) ",
-                            "rgb(190,88,80,0.1) ",
-                        ],
-                        borderWidth: 1,
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            display: false,
-                        }],
-                        yAxes: [{
-                            display: false,
-                        }],
-                    }
-                },
-            });
-        }
-
-        if (select_chart.selectedIndex == 2) {
-            document.getElementById("favourite ").value = select_chart.options[select_chart.selectedIndex].text;
-            var ctx2 = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx2, {
-                type: 'line',
-                data: {
-                    labels: ["Sunday ", "Monday ", "Tuesday ", "Wednesday ", "Thursday ", "Friday ", "Saturday "],
-                    datasets: [{
-                        data: [86, 114, 106, 106, 107, 111, 133],
-                        label: "Total ",
-                        borderColor: "rgb(62,149,205) ",
-                        backgroundColor: "rgb(62,149,205,0.1) ",
-                    }, {
-                        data: [70, 90, 44, 60, 83, 90, 100],
-                        label: "Accepted ",
-                        borderColor: "rgb(60,186,159) ",
-                        backgroundColor: "rgb(60,186,159,0.1) ",
-                    }, {
-                        data: [10, 21, 60, 44, 17, 21, 17],
-                        label: "Pending ",
-                        borderColor: "rgb(255,165,0) ",
-                        backgroundColor: "rgb(255,165,0,0.1) ",
-                    }, {
-                        data: [6, 3, 2, 2, 7, 0, 16],
-                        label: "Rejected ",
-                        borderColor: "rgb(196,88,80) ",
-                        backgroundColor: "rgb(196,88,80,0.1) ",
-                    }]
-                },
-            });
-        }
-
-        if (select_chart.selectedIndex == 3) {
-            document.getElementById("favourite ").value = select_chart.options[select_chart.selectedIndex].text;
-            var ctx = document.getElementById("myChart");
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ["2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12"],
-                    datasets: [{
-                        label: '# of Tomatoes',
-                        data: [12, 19, 3, 5, 2, 3, 20, 3, 5, 6, 2, 1],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: false,
-                    scales: {
-                        xAxes: [{
-                            ticks: {
-                                maxRotation: 90,
-                                minRotation: 80
-                            },
-                            gridLines: {
-                                offsetGridLines: true // à rajouter
-                            }
-                        }, {
-                            position: "top",
-                            ticks: {
-                                maxRotation: 90,
-                                minRotation: 80
-                            },
-                            gridLines: {
-                                offsetGridLines: true // et matcher pareil ici
-                            }
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
-            });
         }
     }
 

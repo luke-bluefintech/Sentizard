@@ -16,22 +16,27 @@ def result():
     output = request.form.to_dict()
 
     sentence = output["sentence"]
-    date1 = output["date1"]
-    date2 = output["date2"]
-    city = output["city"]
     algorithm = output["algorithm"]
 
+    if algorithm == "LSTM":
+        val = backend.analyze_sentiment(sentence, "LSTM")
     if algorithm == "C-LSTM":
         val = backend.analyze_sentiment(sentence, "C-LSTM")
+    elif algorithm == "Bi-LSTM":
+        val = backend.analyze_sentiment(sentence, "Bi-LSTM")
     elif algorithm == "SVM":
         val = backend.analyze_sentiment(sentence, "SVM")
-    elif algorithm == "BiLSTM":
-        val = "BiLSTM!"
-        #val = Bi_LSTM()
+    elif algorithm == "Logistic Regression":
+        val = backend.analyze_sentiment(sentence, "lr")
     roundedVal = round(val, 3)
-    sentence = str(roundedVal)
+    category = "negative"
+    if roundedVal >= .66:
+        category = "positive"
+    elif roundedVal > .33:
+        category = "neutral"
+    decimalVal = str(roundedVal)
 
-    return render_template('index.html', sentence=sentence, date1=date1, date2=date2, city=city, algorithm=algorithm)
+    return render_template('index.html', sentence=sentence, algorithm=algorithm, decimalVal=decimalVal, category=category)
 
 
 if __name__ == "__main__":
