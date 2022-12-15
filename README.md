@@ -32,3 +32,8 @@ To train the models, please run with `python nn_training.py` or `python ml_train
 | Word2Vec | LSTM | 0.828 | 
 | Word2Vec | C-LSTM | 0.836 | 
 | Word2Vec | Bi-LSTM | 0.846 |
+
+## Using the website
+
+Please make sure that you have first installed flask. Then, from the sentizard directory folder, please run `python app.py` and wait 30 seconds for the local server to start. Then, type http://localhost:5000/ into your browser, and the website should display with full funcitonality
+
